@@ -16,7 +16,7 @@ const ChatPanel = (props) => {
           roomNumber:room,
           author:username,
           message:currentMessage,
-          time :new Date(Date.now()).getHours()+":"+new Date(Date.now()).getMinutes()
+          time :new Date(Date.now()).getHours()+":"+new Date(Date.now()).getMinutes() 
         }
         await socket.emit("send_message",messageData)
         
@@ -35,6 +35,7 @@ const ChatPanel = (props) => {
   return (
     <div className="chat-window">
     <div className="chat-header">
+      <div className='live-panel'></div>
       <p>Live Chat</p>
     </div>
     <div className="chat-body">
