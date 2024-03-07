@@ -16,12 +16,21 @@ const socket_io_server=new Server(server,{
 })
 
 socket_io_server.on("connection",(socket)=>{
-    console.log("socket.io",socket.id)
+    socket.on("join_room", (data) => {
+        socket.join(data);
+        console.log(`User with ID: ${socket.id} joined room: ${data}`);
+      });
+      socket.on("send_message", (data) => {
+        socket.to(data.room).emit("receive_message", data);
+      })
+      socket.on("disconnect",(socket)=>{
+        console.log("user Disconnected",socket.id)
+    })
+    // console.log(`User Connected: ${socket.id}`)
 })
 
-socket_io_server.on("disconnect",(socket)=>{
-    console.log("user Disconnected",socket.id)
-})
+
+
 
 server.listen(3001,()=>{
     console.log("SERVER RUNNING")
