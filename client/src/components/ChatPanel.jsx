@@ -24,7 +24,8 @@ function Chat({ socket, username, room }) {
   };
 
   useEffect(() => {
-    socket.on("receive_message", (data) => {
+    socket.off("receive_message").on("receive_message", (data) => {
+
       setMessageList((list) => [...list, data]);
     });
   }, [socket]);
@@ -37,18 +38,19 @@ function Chat({ socket, username, room }) {
       <div className="chat-body">
         <ScrollToBottom className="message-container">
           {messageList.map((messageContent) => {
+            const{author,message,time}=messageContent
             return (
               <div
                 className="message"
-                id={username === messageContent.author ? "other" : "you"}
+                id={username === author ? "other" : "you"}
               >
                 <div>
                   <div className="message-content">
-                    <p>{messageContent.message}</p>
+                    <p>{message}</p>
                   </div>
                   <div className="message-meta">
-                    <p id="time">{messageContent.time}</p>
-                    <p id="author">{messageContent.author}</p>
+                    <p id="time">{time}</p>
+                    <p id="author">{author}</p>
                   </div>
                 </div>
               </div>
